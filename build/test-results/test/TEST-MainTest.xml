@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-10-26T22:03:56" hostname="LAPTOP-NU825KAK" time="0.537">
+  <properties/>
+  <testcase name="thirdQuery" classname="MainTest" time="0.25"/>
+  <testcase name="fourthQuery" classname="MainTest" time="0.071"/>
+  <testcase name="firstQuery" classname="MainTest" time="0.072"/>
+  <testcase name="secondQuery" classname="MainTest" time="0.072"/>
+  <testcase name="fifthQuery" classname="MainTest" time="0.07"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
