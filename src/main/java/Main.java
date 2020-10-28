@@ -163,6 +163,7 @@ public class Main {
         for (int i = 1; i < 11; i++) {
             invoiceDAO.save(new Invoice(new Date(Calendar.YEAR + 119, i, i), organisationDAO.get(i).getId()));
         }
+
         for (int i = 11; i < 21; i++) {
             invoiceDAO.save(new Invoice(new Date(Calendar.YEAR + 119, i , i), organisationDAO.get(i-10).getId()));
         }
