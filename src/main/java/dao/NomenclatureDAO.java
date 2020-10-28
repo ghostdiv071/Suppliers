@@ -65,13 +65,13 @@ public final class NomenclatureDAO implements DAO<Nomenclature> {
     @Override
     public void update(Nomenclature entity) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE nomenclature SET name = ?, taxpayer_id = ?, checking_account = ? WHERE id"
+                "UPDATE nomenclature SET name = ?, taxpayer_id = ?, checking_account = ? WHERE id = ?"
         )
         ){
             int count = 1;
-            preparedStatement.setInt(count++, entity.getId());
             preparedStatement.setLong(count++, entity.getInternalCode());
-            preparedStatement.setString(count, entity.getName());
+            preparedStatement.setString(count++, entity.getName());
+            preparedStatement.setInt(count, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

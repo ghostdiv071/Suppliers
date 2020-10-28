@@ -60,8 +60,7 @@ public final class InvoiceItemDAO implements DAO<InvoiceItem>{
             int count = 1;
             preparedStatement.setLong(count++, entity.getPrice());
             preparedStatement.setInt(count++, entity.getAmount());
-            preparedStatement.setInt(count++, entity.getNomenclature());
-            preparedStatement.setInt(count, entity.getInvoice_ID());
+            preparedStatement.setInt(count, entity.getNomenclature());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -71,15 +70,15 @@ public final class InvoiceItemDAO implements DAO<InvoiceItem>{
     @Override
     public void update(InvoiceItem entity) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE invoice_item SET price = ?, amount = ?, nomenclature = ?, invoice_id = ? WHERE id"
+                "UPDATE invoice_item SET price = ?, amount = ?, nomenclature = ?, invoice_id = ? WHERE id = ?"
         )
         ){
             int count = 1;
-            preparedStatement.setInt(count++, entity.getId());
             preparedStatement.setLong(count++, entity.getPrice());
             preparedStatement.setInt(count++, entity.getAmount());
             preparedStatement.setInt(count++, entity.getNomenclature());
-            preparedStatement.setInt(count, entity.getInvoice_ID());
+            preparedStatement.setInt(count++, entity.getInvoice_ID());
+            preparedStatement.setInt(count, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

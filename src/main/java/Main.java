@@ -10,21 +10,18 @@ import java.util.Calendar;
 
 public class Main {
 
-    final static String dbName = "Suppliers";
-    final static String url = "jdbc:postgresql://127.0.0.1:5432/" + dbName;
-    final static String user = "postgres";
-    final static String password = "anna";
-
-
     public static void main(String[] args) {
         final Flyway flyway = Flyway.configure()
-                .dataSource(url, user, password)
+                .dataSource(ConnectionUtils.URL.value,
+                        ConnectionUtils.USER.value,
+                        ConnectionUtils.PASSWORD.value)
                 .locations("db")
                 .load();
         flyway.clean();
         flyway.migrate();
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+        try (Connection connection = DriverManager.getConnection(ConnectionUtils.URL.value,
+                ConnectionUtils.USER.value, ConnectionUtils.PASSWORD.value)) {
             System.out.println("Connection is Ok");
 
             final OrganisationDAO organisationDAO = new OrganisationDAO(connection);

@@ -68,17 +68,18 @@ public final class OrganisationDAO implements DAO<Organisation> {
     @Override
     public void update(Organisation entity) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE organisation SET name = ?, taxpayer_id = ?, checking_account = ? WHERE id"
+                "UPDATE organisation SET name = ?, taxpayer_id = ?, checking_account = ? WHERE id = ?"
         )
         ){
             int count = 1;
-            preparedStatement.setInt(count++, entity.getId());
             preparedStatement.setString(count++, entity.getName());
             preparedStatement.setLong(count++, entity.getTaxpayerID());
-            preparedStatement.setString(count, entity.getCheckingAccount());
+            preparedStatement.setString(count++, entity.getCheckingAccount());
+            preparedStatement.setInt(count, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+
         }
     }
 

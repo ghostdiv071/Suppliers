@@ -12,21 +12,27 @@ import static org.junit.Assert.*;
 
 public class MainTest {
 
-    final static String dbName = "Suppliers";
-    final static String url = "jdbc:postgresql://127.0.0.1:5432/" + dbName;
-    final static String user = "postgres";
-    final static String password = "anna";
+    public Connection setConnection() throws SQLException {
+        Connection connection;
+        try {
+            connection =  DriverManager.getConnection(ConnectionUtils.URL.value,
+                    ConnectionUtils.USER.value, ConnectionUtils.PASSWORD.value);
+            return connection;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        throw new SQLException();
+    }
 
     @Test
     public void firstQuery() throws SQLException {
         int[] expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         int[] result = new int[expected.length];
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            ArrayList<Integer> temp = Main.executeFirst(connection);
-            for (int i = 0; i < temp.size(); i++) {
-                result[i] = temp.get(i);
-            }
+        ArrayList<Integer> temp = Main.executeFirst(setConnection());
+        for (int i = 0; i < temp.size(); i++) {
+            result[i] = temp.get(i);
         }
 
         assertArrayEquals(expected, result);
@@ -38,11 +44,9 @@ public class MainTest {
         long limit = 1700;
         int[] result = new int[expected.length];
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            ArrayList<Integer> temp = Main.executeSecond(connection, limit);
-            for (int i = 0; i < temp.size(); i++) {
-                result[i] = temp.get(i);
-            }
+        ArrayList<Integer> temp = Main.executeSecond(setConnection(), limit);
+        for (int i = 0; i < temp.size(); i++) {
+            result[i] = temp.get(i);
         }
 
         assertArrayEquals(expected, result);
@@ -55,11 +59,9 @@ public class MainTest {
         Date date = new Date(Calendar.YEAR+119, 4, 5);
         long interval = 150;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            ArrayList<Long> temp = Main.executeThird(connection, date, interval);
-            for (int i = 0; i < temp.size(); i++) {
-                result[i] = temp.get(i);
-            }
+        ArrayList<Long> temp = Main.executeThird(setConnection(), date, interval);
+        for (int i = 0; i < temp.size(); i++) {
+            result[i] = temp.get(i);
         }
 
         assertArrayEquals(expected, result);
@@ -70,11 +72,9 @@ public class MainTest {
         BigDecimal expected = new BigDecimal("13050.000000000000");
         Date date = new Date(Calendar.YEAR+119, 4,5);
         long interval = 150;
-        BigDecimal result = new BigDecimal("0");
+        BigDecimal result;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            result = Main.executeFourth(connection, date, interval);
-        }
+        result = Main.executeFourth(setConnection(), date, interval);
 
         assertEquals(expected, result);
     }
@@ -86,14 +86,13 @@ public class MainTest {
         Date date = new Date(Calendar.YEAR+119, 4,5);
         long interval = 150;
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            ArrayList<String > temp = Main.executeFifth(connection, date, interval);
-            for (int i = 0; i < temp.size(); i++) {
-                result[i] = temp.get(i);
-            }
+        ArrayList<String > temp = Main.executeFifth(setConnection(), date, interval);
+        for (int i = 0; i < temp.size(); i++) {
+            result[i] = temp.get(i);
         }
 
-        assertArrayEquals(expected, result);
+        assertArrayEquals(expected, result
+        );
     }
 
 }

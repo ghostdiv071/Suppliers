@@ -65,13 +65,13 @@ public final class InvoiceDAO implements DAO<Invoice> {
     @Override
     public void update(Invoice entity) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE invoice SET date = ?, organisation_id = ? WHERE id"
+                "UPDATE invoice SET date = ?, organisation_id = ? WHERE id = ?"
         )
         ){
             int count = 1;
-            preparedStatement.setInt(count++, entity.getId());
             preparedStatement.setDate(count++, entity.getDate());
-            preparedStatement.setInt(count, entity.getOrganisation_id());
+            preparedStatement.setInt(count++, entity.getOrganisation_id());
+            preparedStatement.setInt(count, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
